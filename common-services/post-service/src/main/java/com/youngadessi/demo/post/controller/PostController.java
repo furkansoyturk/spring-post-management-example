@@ -6,8 +6,7 @@ import com.youngadessi.demo.post.model.mapper.PostMapper;
 import com.youngadessi.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -25,15 +24,10 @@ public class PostController {
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
 
-    /*@GetMapping(value = "/getOK")
+    @GetMapping(value = "/getOK")
     public HttpStatus getSamplePost() {
         return HttpStatus.OK;
     }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Post> getSamplePost(@PathVariable Long id) {
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
 
     @GetMapping
     public List<PostDTO> getAllPosts() {

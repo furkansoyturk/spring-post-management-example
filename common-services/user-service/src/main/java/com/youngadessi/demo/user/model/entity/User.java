@@ -8,12 +8,12 @@ import javax.persistence.*;
 //import javax.validation.constraints.Size;
 
 //@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "User")
+@Builder
+@Entity
 @Table(name = "tbl_user")
 public class User extends BaseEntity {
 

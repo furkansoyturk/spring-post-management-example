@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class UserDataDTO implements Serializable {
+public class UserDTO implements Serializable {
 
     @NotBlank
     private String username;

@@ -3,11 +3,15 @@ package com.youngadessi.demo.post.model.entity;
 import com.youngadessi.demo.model.BaseEntity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "tbl_comment")
 public class Comment extends BaseEntity {

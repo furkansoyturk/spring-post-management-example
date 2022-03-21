@@ -3,11 +3,15 @@ package com.youngadessi.demo.post.model.entity;
 import com.youngadessi.demo.model.BaseEntity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "tbl_post")
 public class Post extends BaseEntity {
@@ -28,4 +32,5 @@ public class Post extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id",referencedColumnName = "id")
     )
     private List<Tag> postTags;
+
 }

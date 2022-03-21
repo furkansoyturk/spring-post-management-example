@@ -10,17 +10,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.hibernate.annotations.UpdateTimestamp;
 
-//@Data
 @MappedSuperclass
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
+//@Builder
 public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id")
+    @Column(name = "id")
     private Long id;
 
     @CreatedBy
