@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 //@AllArgsConstructor
 //@Builder
 @Entity(name = "User")
-//@Table(name = "user")
+//@Table(name = "tbl_user")
 public class User extends BaseEntity {
 
     //@Size(min = 8, max = 32, message = "username length should be between 8 and 32 characters")
