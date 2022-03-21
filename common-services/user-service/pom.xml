@@ -61,10 +61,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -82,14 +82,9 @@
         </dependency>
         <dependency>
             <groupId>com.youngadessi.demo</groupId>
-            <artifactId>common-libs</artifactId>
+            <artifactId>common-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.youngadessi.demo</groupId>
-            <artifactId>common-models</artifactId>
-            <scope>compile</scope>
-        </dependency>-->
     </dependencies>
 
     <build>

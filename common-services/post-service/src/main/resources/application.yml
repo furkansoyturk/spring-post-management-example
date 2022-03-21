@@ -1,2 +1,11 @@
 server:
   port: 8081
+  servlet:
+    context-path: /post-service
+
+spring:
+  profiles:
+    include: sql
+  jpa:
+    properties:
+      hibernate.default_schema: post_schema
