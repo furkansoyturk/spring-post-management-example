@@ -15,18 +15,10 @@ import javax.persistence.*;
 //@Table(name = "post")
 public class Post extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id")
-    private Long id;
-
     //@Column(name = "created_by_name")
     private String createdByName;
 
     //@Column(name = "content")
     private String content;
-
-    //@Column(name = "version")
-    private  Integer version;
 
 }

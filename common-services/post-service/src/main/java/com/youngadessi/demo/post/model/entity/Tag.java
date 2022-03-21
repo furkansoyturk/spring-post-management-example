@@ -15,11 +15,6 @@ import javax.persistence.*;
 //@Table(name = "tag")
 public class Tag extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id")
-    private Long id;
-
     //@Column(name = "tag_name")
     private String tagName;
 
