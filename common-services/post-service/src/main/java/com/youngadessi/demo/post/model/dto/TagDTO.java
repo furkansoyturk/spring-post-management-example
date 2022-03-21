@@ -3,7 +3,7 @@ package com.youngadessi.demo.post.model.dto;
 import lombok.Data;
 
 @Data
-public class TagBaseDTO {
+public class TagDTO {
 
     private String tagName;
 
