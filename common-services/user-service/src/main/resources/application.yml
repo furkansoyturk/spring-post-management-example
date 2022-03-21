@@ -1,2 +1,9 @@
 server:
   port: 8080
+
+spring:
+  profiles:
+    include: sql,script
+  jpa:
+    properties:
+      hibernate.default_schema: user_schema

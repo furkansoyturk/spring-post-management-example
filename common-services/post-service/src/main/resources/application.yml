@@ -1,2 +1,9 @@
 server:
   port: 8081
+
+spring:
+  profiles:
+    include: sql,script
+  jpa:
+    properties:
+      hibernate.default_schema: post_schema
