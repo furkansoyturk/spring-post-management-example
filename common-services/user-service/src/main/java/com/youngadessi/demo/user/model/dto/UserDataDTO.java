@@ -1,12 +1,11 @@
 package com.youngadessi.demo.user.model.dto;
 
-import lombok.Data;
-
+import lombok.*;
 import javax.validation.constraints.NotBlank;
-
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 public class UserDataDTO implements Serializable {
 
     @NotBlank
