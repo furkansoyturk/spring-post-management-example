@@ -1,24 +1,17 @@
 package com.youngadessi.demo.post.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.youngadessi.demo.model.BaseEntity;
 
+import lombok.*;
 import javax.persistence.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Entity(name = "Tag")
-//@Table(name = "tag")
+@Getter
+@Setter
+@Entity
+@Table(name = "tbl_tag")
 public class Tag extends BaseEntity {
 
-    //@Column(name = "tag_name")
+    @Column(name = "tag_name")
     private String tagName;
-
-    //@Column(name = "version")
-    private  Integer version;
 
 }

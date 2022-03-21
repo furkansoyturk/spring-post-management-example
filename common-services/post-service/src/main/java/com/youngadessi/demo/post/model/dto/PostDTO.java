@@ -1,9 +1,11 @@
 package com.youngadessi.demo.post.model.dto;
 
-import lombok.Data;
+import lombok.*;
+import java.io.Serializable;
 
-@Data
-public class PostDTO {
+@Getter
+@Setter
+public class PostDTO implements Serializable {
 
     private String createdByName;
 
