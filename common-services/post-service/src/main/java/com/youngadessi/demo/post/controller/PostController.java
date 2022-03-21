@@ -6,11 +6,10 @@ import com.youngadessi.demo.post.model.mapper.PostMapper;
 import com.youngadessi.demo.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -22,22 +21,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/post")
 public class PostController {
 
-    @Autowired
     private final PostService postService;
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
 
-    /*@GetMapping(value = "/{id}")
-    public ResponseEntity<Post> getSamplePost(@PathVariable Long id) {
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
-
-    @GetMapping(value = "/getOK")
+    /*@GetMapping(value = "/getOK")
     public HttpStatus getSamplePost() {
         return HttpStatus.OK;
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Post> getSamplePost(@PathVariable Long id) {
+        return new ResponseEntity(HttpStatus.OK);
+    }*/
+
+    @GetMapping
     public List<PostDTO> getAllPosts() {
         List<Post> allPosts = postService.getAllPosts();
         return allPosts.stream().map(POST_MAPPER::toDto).collect(Collectors.toList());
@@ -48,12 +46,12 @@ public class PostController {
         return POST_MAPPER.toDto(postService.getPost(id));
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public void savePost(@Valid @RequestBody PostDTO post) {
         postService.addPost(POST_MAPPER.toEntity(post));
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping
     public PostDTO updatePost(@Valid @RequestBody Post post) {
         if (post.getId() == null) {
             throw new RuntimeException("Post id can not be null for update!");
@@ -61,7 +59,7 @@ public class PostController {
         return POST_MAPPER.toDto(postService.updatePost(post));
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping
     public boolean deletePost(@RequestParam @Min(1) Long id) {
         return postService.deletePost(id);
     }
