@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
 public class BaseEntity {
 
     @Id

@@ -20,6 +20,8 @@
         <java.version>17</java.version>
     </properties>
 
+
+
     <modules>
         <module>post-service</module>
         <module>user-service</module>

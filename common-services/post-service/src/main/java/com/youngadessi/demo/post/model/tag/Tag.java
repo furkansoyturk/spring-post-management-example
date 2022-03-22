@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.model;
+package com.youngadessi.demo.post.model.tag;
 
 import com.youngadessi.demo.model.BaseEntity;
 

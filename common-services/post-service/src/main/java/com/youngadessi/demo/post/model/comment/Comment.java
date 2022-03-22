@@ -1,6 +1,7 @@
-package com.youngadessi.demo.post.model;
+package com.youngadessi.demo.post.model.comment;
 
 import com.youngadessi.demo.model.BaseEntity;
+import com.youngadessi.demo.post.model.post.Post;
 import lombok.Getter;
 import lombok.Setter;
 

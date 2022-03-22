@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.model;
+package com.youngadessi.demo.post.model.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
