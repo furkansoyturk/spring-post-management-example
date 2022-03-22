@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface PostMapper {
 
-
     PostDTO postToPostDTO(Post post);
 
     Post postDTOToPost(PostDTO dto);

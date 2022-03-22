@@ -1,5 +1,6 @@
 package com.youngadessi.demo.post.api.post;
 
+import com.youngadessi.demo.post.exception.post.PostNotFoundException;
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.post.PostMapper;
