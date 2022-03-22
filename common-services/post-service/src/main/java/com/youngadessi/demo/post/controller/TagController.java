@@ -24,23 +24,23 @@ public class TagController {
     private static final TagMapper TAG_MAPPER = Mappers.getMapper(TagMapper.class);
 
     @GetMapping
-    public List<TagDTO> getAllComments() {
-        List<Tag> allComments = tagService.getAllTags();
-        return allComments.stream().map(TAG_MAPPER::toDto).collect(Collectors.toList());
+    public List<TagDTO> getAllTags() {
+        List<Tag> allTags = tagService.getAllTags();
+        return allTags.stream().map(TAG_MAPPER::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
-    public TagDTO getComment(@PathVariable @Min(1) Long id) {
+    public TagDTO getTag(@PathVariable @Min(1) Long id) {
         return TAG_MAPPER.toDto(tagService.getTag(id));
     }
 
     @PostMapping
-    public void saveComment(@Valid @RequestBody TagDTO tag) {
+    public void saveTag(@Valid @RequestBody TagDTO tag) {
         tagService.addTag(TAG_MAPPER.toEntity(tag));
     }
 
     @PutMapping
-    public TagDTO updateComment(@Valid @RequestBody Tag tag) {
+    public TagDTO updateTag(@Valid @RequestBody Tag tag) {
         if (tag.getId() == null) {
             throw new RuntimeException("Tag id can not be null for update!");
         }
@@ -48,7 +48,7 @@ public class TagController {
     }
 
     @DeleteMapping
-    public boolean deleteComment(@RequestParam @Min(1) Long id) {
+    public boolean deleteTag(@RequestParam @Min(1) Long id) {
         return tagService.deleteTag(id);
     }
 
