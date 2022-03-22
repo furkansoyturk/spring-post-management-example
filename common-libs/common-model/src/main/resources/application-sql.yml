@@ -18,7 +18,7 @@ spring:
     generate-ddl: false
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
