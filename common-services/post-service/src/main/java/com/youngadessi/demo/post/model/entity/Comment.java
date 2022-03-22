@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "tbl_comment")
+@Table(name = "tbl_post_comment")
 public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
