@@ -20,8 +20,8 @@ public class PostController {
 
 
     @GetMapping
-    public List<Post> getAllPost(){
-        return postService.getAllPosts();
+    public List<Post> findAll(){
+        return postService.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -31,13 +31,23 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Boolean> savePost(@RequestBody PostDTO postDTO){
-        return new ResponseEntity<>(postService.savePost(postDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.save(postDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable( "id" ) Long id, @RequestBody PostDTO postDTO) {
-//        postService.update(postDTO);
+    public Post update(@PathVariable( "id" ) Long id, @RequestBody PostDTO postDTO) {
+        return postService.update(id,postDTO);
+    }
+
+//    @PostMapping
+//    public boolean updateAll(List<PostDTO> postDTOList){
+//        return true;
+//    }
+
+    @GetMapping(value = "/last-five-days")
+    public List<Post> findLastFiveDay(){
+        return postService.findLastFiveDays();
     }
 
     @DeleteMapping(value = "/{id}")

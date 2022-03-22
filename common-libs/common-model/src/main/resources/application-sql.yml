@@ -13,6 +13,8 @@ spring:
       maximum-pool-size: 30
       pool-name: PostManagementHikariCP
   jpa:
+    show_sql: true
+
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     generate-ddl: false
@@ -34,3 +36,12 @@ spring:
       hibernate.format_sql: true
       hibernate.use_sql_comments: true
       hibernate.show-sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type:
+          descriptor:
+            sql: trace
+
