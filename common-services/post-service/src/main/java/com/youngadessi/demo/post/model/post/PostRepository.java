@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
 
-    @Query(value = "SELECT * FROM post_schema.tbl_post WHERE created_date_time > now()::DATE - 5;", nativeQuery = true)
+    @Query(value = "SELECT * FROM post_schema.tbl_post WHERE created_date_time > cast(now() as DATE) - 5;", nativeQuery = true)
     public List<Post> findLastFiveDays();
 }
