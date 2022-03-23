@@ -29,8 +29,8 @@ public class PostController {
         return postService.findById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Boolean> savePost(@RequestBody PostDTO postDTO){
+    @PostMapping(value = "/save")
+    public ResponseEntity<Boolean> save(@RequestBody PostDTO postDTO){
         return new ResponseEntity<>(postService.save(postDTO), HttpStatus.CREATED);
     }
 
@@ -54,5 +54,16 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id){
         postService.deleteById(id);
+    }
+
+
+    @PostMapping(value = "/{id}/assign-tags")
+    public ResponseEntity<Boolean> assignTagToPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
+        return new ResponseEntity<>(postService.assignTagToPost(id,tagIdList), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}/delete-tags")
+    public ResponseEntity<Boolean> deleteTagsFromPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
+        return new ResponseEntity<>(postService.deleteTagsFromPost(id,tagIdList), HttpStatus.CREATED);
     }
 }

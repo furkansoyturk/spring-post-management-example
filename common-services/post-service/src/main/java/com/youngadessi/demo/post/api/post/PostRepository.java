@@ -1,5 +1,6 @@
-package com.youngadessi.demo.post.model.post;
+package com.youngadessi.demo.post.api.post;
 
+import com.youngadessi.demo.post.model.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

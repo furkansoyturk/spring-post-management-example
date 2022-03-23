@@ -1,25 +1,28 @@
 package com.youngadessi.demo.post.api.post;
 
+import com.youngadessi.demo.post.api.tag.TagRepository;
 import com.youngadessi.demo.post.exception.post.PostNotFoundException;
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.post.PostMapper;
-import com.youngadessi.demo.post.model.post.PostRepository;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaUpdate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService{
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
 
@@ -48,13 +51,46 @@ public class PostService{
         return new Post();
     }
 
-//    @Query(value = " from post_schema.tbl_post where created_date_time > now()::DATE - 5")
     public List<Post> findLastFiveDays(){
         return postRepository.findLastFiveDays();
     }
 
 
+    public Boolean assignTagToPost(Long postId, List<Long> tagId){
+        Optional<Post> post = postRepository.findById(postId);
+        List<Tag> allTagById = tagRepository.findAllById(tagId);
 
+        post.get().setPostTags(allTagById);
+        postRepository.save(post.get());
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean deleteTagsFromPost(Long postId, List<Long> tagsToDelete){
+        Optional<Post> post = postRepository.findById(postId);
+
+        List<Tag> allTagById = tagRepository.findAllById(tagsToDelete);
+
+        int postTagCount = post.get().getPostTags().size();
+        List<Tag> postTags = Arrays.asList(new Tag[postTagCount]);
+
+        for (int i = 0; i < postTags.size(); i++) {
+            Tag existingTag = postTags.get(i);
+            for (int j = 0; j < allTagById.size(); j++) {
+                Tag tagToDelete = allTagById.get(j);
+                if( existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
+                    System.out.println("eşit değil: " + existingTag.getId().intValue() + " : " + tagToDelete.getId().intValue());
+                    postTags.remove(existingTag);
+                }
+            }
+        }
+
+
+        post.get().setPostTags(postTags);
+        postRepository.save(post.get());
+
+        return Boolean.TRUE;
+    }
 
 
 
