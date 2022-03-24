@@ -48,7 +48,7 @@ public class PostService{
     public Post update(Long id, PostDTO postDTO){
         Post post = this.findById(id);
         postRepository.save(POST_MAPPER.mergePostDTOWithPost(post,postDTO));
-        return new Post();
+        return this.findById(id);
     }
 
     public List<Post> findLastFiveDays(){
@@ -56,7 +56,7 @@ public class PostService{
     }
 
 
-    public Boolean assignTagToPost(Long postId, List<Long> tagId){
+    public Boolean assignTagsToPost(Long postId, List<Long> tagId){
         Optional<Post> post = postRepository.findById(postId);
         List<Tag> allTagById = tagRepository.findAllById(tagId);
 

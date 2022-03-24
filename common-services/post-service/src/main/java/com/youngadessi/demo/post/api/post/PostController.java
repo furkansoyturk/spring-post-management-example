@@ -2,9 +2,7 @@ package com.youngadessi.demo.post.api.post;
 
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
-import com.youngadessi.demo.post.model.post.PostMapper;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,7 @@ public class PostController {
         return new ResponseEntity<>(postService.save(postDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/update")
     @ResponseStatus(HttpStatus.OK)
     public Post update(@PathVariable( "id" ) Long id, @RequestBody PostDTO postDTO) {
         return postService.update(id,postDTO);
@@ -50,7 +48,7 @@ public class PostController {
         return postService.findLastFiveDays();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}/delete")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id){
         postService.deleteById(id);
@@ -59,7 +57,7 @@ public class PostController {
 
     @PostMapping(value = "/{id}/assign-tags")
     public ResponseEntity<Boolean> assignTagToPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
-        return new ResponseEntity<>(postService.assignTagToPost(id,tagIdList), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.assignTagsToPost(id,tagIdList), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}/delete-tags")
