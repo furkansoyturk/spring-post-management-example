@@ -64,4 +64,6 @@ public class PostController {
     public ResponseEntity<Boolean> deleteTagsFromPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
         return new ResponseEntity<>(postService.deleteTagsFromPost(id,tagIdList), HttpStatus.CREATED);
     }
+
+
 }
