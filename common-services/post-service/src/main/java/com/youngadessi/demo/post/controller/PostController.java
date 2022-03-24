@@ -29,6 +29,10 @@ public class PostController {
         return HttpStatus.OK;
     }
 
+    // TODO: 3/24/2022 Pageable ???
+
+    // TODO: 3/24/2022 ResponseEntity ???
+
     @GetMapping
     public List<PostDTO> getAllPosts() {
         List<Post> allPosts = postService.getAllPosts();

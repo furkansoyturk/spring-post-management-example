@@ -33,7 +33,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post updatePost(Post post) {
-        return postRepository.save(post);
+        Post post_=postRepository.findById(post.getId()).orElse(null);
+
+        post_.setCreatedByName("werwerwe");
+
+        return postRepository.save(post_);
     }
 
     @Override
