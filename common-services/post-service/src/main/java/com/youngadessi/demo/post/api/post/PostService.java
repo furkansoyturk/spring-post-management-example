@@ -12,11 +12,10 @@ import com.youngadessi.demo.post.model.post.PostMapper;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostService{
@@ -51,12 +50,37 @@ public class PostService{
         postRepository.deleteById(id);
     }
 
-
     public Post update(Long id, PostDTO postDTO){
         Post post = this.findById(id);
         postRepository.save(POST_MAPPER.mergePostDTOWithPost(post,postDTO));
         return this.findById(id);
     }
+
+
+
+
+    public List<Optional<Post>> findByComment(Comment comment){
+
+        //TODO : return de sikinti var
+        String commentText = comment.getCommentText();
+        List<Comment> commentList = commentRepository.findCommentsByCommentText(commentText);
+        List<Optional<Post>> postList = new ArrayList<>();
+
+        postList.clear();
+
+        for (Comment c:commentList) {
+            Long postId = c.getPost().getId();
+            postList.add(postRepository.findById(postId));
+        }
+        return postList;
+    }
+
+
+
+
+
+
+
 
     public List<Post> findLastFiveDays(){
         return postRepository.findLastFiveDays();
@@ -86,13 +110,10 @@ public class PostService{
             for (int j = 0; j < allTagById.size(); j++) {
                 Tag tagToDelete = allTagById.get(j);
                 if( existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
-                    System.out.println("eşit değil: " + existingTag.getId().intValue() + " : " + tagToDelete.getId().intValue());
                     postTags.remove(existingTag);
                 }
             }
         }
-
-
         post.get().setPostTags(postTags);
         postRepository.save(post.get());
 

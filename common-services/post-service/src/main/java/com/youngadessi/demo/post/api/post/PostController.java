@@ -1,5 +1,6 @@
 package com.youngadessi.demo.post.api.post;
 
+import com.youngadessi.demo.post.model.comment.Comment;
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("posts")
@@ -39,10 +41,10 @@ public class PostController {
         return postService.update(id,postDTO);
     }
 
-//    @PostMapping
-//    public boolean updateAll(List<PostDTO> postDTOList){
-//        return true;
-//    }
+    @GetMapping(value = "search")
+    public List<Optional<Post>>  findByComment(@RequestBody Comment comment){
+        return postService.findByComment(comment);
+    }
 
     @GetMapping(value = "/last-five-days")
     public List<Post> findLastFiveDay(){
