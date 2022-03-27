@@ -1,5 +1,6 @@
 package com.youngadessi.demo.post.api.post;
 
+import com.youngadessi.demo.post.api.comment.CommentRepository;
 import com.youngadessi.demo.post.api.tag.TagRepository;
 import com.youngadessi.demo.post.exception.post.PostNotFoundException;
 import com.youngadessi.demo.post.model.comment.Comment;
@@ -13,7 +14,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -100,7 +100,7 @@ public class PostService{
     }
 
 
-    public Boolean commentToPost(Long postId, CommentDTO commentDTO){
+    public Boolean comment(Long postId, CommentDTO commentDTO){
 
         Post postById = this.findById(postId);
 
@@ -110,4 +110,6 @@ public class PostService{
 
         return Boolean.TRUE;
     }
+
+
 }

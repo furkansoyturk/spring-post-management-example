@@ -66,9 +66,9 @@ public class PostController {
         return new ResponseEntity<>(postService.deleteTagsFromPost(id,tagIdList), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/{id}/comment-post")
-    public ResponseEntity<Boolean> com(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
-        return new ResponseEntity<>(postService.commentToPost(id,commentDTO), HttpStatus.CREATED);
+    @PostMapping(value = "/{id}/comment")
+    public ResponseEntity<Boolean> comment(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
+        return new ResponseEntity<>(postService.comment(id,commentDTO), HttpStatus.CREATED);
     }
 
 }

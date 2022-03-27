@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.api.post;
+package com.youngadessi.demo.post.api.comment;
 
 import com.youngadessi.demo.post.model.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
