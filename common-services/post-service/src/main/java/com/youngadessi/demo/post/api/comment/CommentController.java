@@ -20,4 +20,10 @@ public class CommentController {
         return new ResponseEntity<>(commentService.update(id,commentDTO), HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "{id}/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id){
+      commentService.deleteById(id);
+    }
+
 }

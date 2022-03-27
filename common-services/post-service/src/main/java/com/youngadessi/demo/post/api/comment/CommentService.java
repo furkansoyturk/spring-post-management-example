@@ -7,6 +7,8 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.management.LockInfo;
+
 @Service
 public class CommentService {
 
@@ -22,6 +24,10 @@ public class CommentService {
         commentRepository.save(COMMENT_MAPPER.mergeCommentWithCommentDTO(comment, commentDTO));
 
         return Boolean.TRUE;
+    }
+
+    public void deleteById(Long id){
+        commentRepository.deleteById(id);
     }
 
 }
