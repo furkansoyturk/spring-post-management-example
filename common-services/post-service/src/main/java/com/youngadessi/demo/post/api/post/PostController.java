@@ -2,6 +2,7 @@ package com.youngadessi.demo.post.api.post;
 
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
+import com.youngadessi.demo.post.model.comment.CommentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +66,9 @@ public class PostController {
         return new ResponseEntity<>(postService.deleteTagsFromPost(id,tagIdList), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/{id}/comment-post")
+    public ResponseEntity<Boolean> com(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
+        return new ResponseEntity<>(postService.commentToPost(id,commentDTO), HttpStatus.CREATED);
+    }
 
 }

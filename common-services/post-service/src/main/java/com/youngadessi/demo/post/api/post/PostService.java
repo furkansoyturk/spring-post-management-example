@@ -2,6 +2,9 @@ package com.youngadessi.demo.post.api.post;
 
 import com.youngadessi.demo.post.api.tag.TagRepository;
 import com.youngadessi.demo.post.exception.post.PostNotFoundException;
+import com.youngadessi.demo.post.model.comment.Comment;
+import com.youngadessi.demo.post.model.comment.CommentDTO;
+import com.youngadessi.demo.post.model.comment.CommentMapper;
 import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.post.PostMapper;
@@ -24,7 +27,11 @@ public class PostService{
     @Autowired
     TagRepository tagRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
+
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
+    private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
 
     public Boolean save(PostDTO postDTO){
         postRepository.save(POST_MAPPER.postDTOToPost(postDTO));
@@ -93,5 +100,14 @@ public class PostService{
     }
 
 
+    public Boolean commentToPost(Long postId, CommentDTO commentDTO){
 
+        Post postById = this.findById(postId);
+
+        Comment comment = COMMENT_MAPPER.commentDTOTOComment(commentDTO);
+        comment.setPost(postById);
+        commentRepository.save(comment);
+
+        return Boolean.TRUE;
+    }
 }
