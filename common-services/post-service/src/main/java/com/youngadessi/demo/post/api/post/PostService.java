@@ -12,7 +12,7 @@ import com.youngadessi.demo.post.model.post.PostMapper;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -64,14 +64,21 @@ public class PostService{
         //TODO : return de sikinti var
         String commentText = comment.getCommentText();
         List<Comment> commentList = commentRepository.findCommentsByCommentText(commentText);
+
         List<Optional<Post>> postList = new ArrayList<>();
+        HashMap<Long, Optional<Post>> postHashMap = new HashMap<>();
+
 
         postList.clear();
 
         for (Comment c:commentList) {
             Long postId = c.getPost().getId();
-            postList.add(postRepository.findById(postId));
+
+            postHashMap.putIfAbsent(postId,postRepository.findById(postId));
+
+            System.out.println(postHashMap);
         }
+
         return postList;
     }
 
