@@ -20,5 +20,7 @@ public interface PostMapper {
 
     List<Post> mergePostDTOListWithPostList(@MappingTarget List<Post> postList, List<PostDTO> postDTOList);
 
+    List<PostDTO> toPostDTO(List<Post> postList);
+
 
 }

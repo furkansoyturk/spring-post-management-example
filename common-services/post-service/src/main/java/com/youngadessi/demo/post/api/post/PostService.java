@@ -12,7 +12,6 @@ import com.youngadessi.demo.post.model.post.PostMapper;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,6 +27,8 @@ public class PostService{
 
     @Autowired
     CommentRepository commentRepository;
+
+//    TODO: global exception
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
     private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
@@ -56,43 +57,16 @@ public class PostService{
         return this.findById(id);
     }
 
+    public List<PostDTO> findPostsByComment(String commentText){
+        List<Post> postList = commentRepository.findPostsByCommentText(commentText);
+        List<PostDTO> postDTOS = POST_MAPPER.toPostDTO(postList);
 
-
-
-    public List<Optional<Post>> findByComment(Comment comment){
-
-        //TODO : return de sikinti var
-        String commentText = comment.getCommentText();
-        List<Comment> commentList = commentRepository.findCommentsByCommentText(commentText);
-
-        List<Optional<Post>> postList = new ArrayList<>();
-        HashMap<Long, Optional<Post>> postHashMap = new HashMap<>();
-
-
-        postList.clear();
-
-        for (Comment c:commentList) {
-            Long postId = c.getPost().getId();
-
-            postHashMap.putIfAbsent(postId,postRepository.findById(postId));
-
-            System.out.println(postHashMap);
-        }
-
-        return postList;
+        return postDTOS;
     }
-
-
-
-
-
-
-
 
     public List<Post> findLastFiveDays(){
         return postRepository.findLastFiveDays();
     }
-
 
     public Boolean assignTagsToPost(Long postId, List<Long> tagId){
         Optional<Post> post = postRepository.findById(postId);
