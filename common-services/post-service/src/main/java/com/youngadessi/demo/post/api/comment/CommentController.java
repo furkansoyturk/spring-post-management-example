@@ -14,15 +14,15 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PutMapping(value = "{id}/update")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
         return new ResponseEntity<>(commentService.update(id,commentDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "{id}/delete")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id){
-      commentService.deleteById(id);
+        commentService.deleteById(id);
     }
 
 }

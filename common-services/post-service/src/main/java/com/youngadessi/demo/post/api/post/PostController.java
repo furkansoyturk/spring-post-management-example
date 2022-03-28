@@ -17,16 +17,14 @@ public class PostController {
 
     private final PostService postService;
 
-//TODO should return DTOs
-
     @GetMapping
-    public List<Post> findAll(){
-        return postService.findAll();
+    public ResponseEntity<List<PostDTO>> findAll(){
+        return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public Post findById(@PathVariable("id") Long id) {
-        return postService.findById(id);
+    public ResponseEntity<Post> findById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -35,9 +33,8 @@ public class PostController {
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Post update(@PathVariable( "id" ) Long id, @RequestBody PostDTO postDTO) {
-        return postService.update(id,postDTO);
+    public ResponseEntity<PostDTO> update(@PathVariable( "id" ) Long id, @RequestBody PostDTO postDTO) {
+        return new ResponseEntity<>(postService.update(id,postDTO), HttpStatus.OK);
     }
 
     @GetMapping(value = "/comments/{comment-text}")
@@ -46,9 +43,10 @@ public class PostController {
         return new ResponseEntity<>(postDTOList, HttpStatus.OK);
     }
 
+    //TODO fix this return
     @GetMapping(value = "/last-five-days")
-    public List<Post> findLastFiveDay(){
-        return postService.findLastFiveDays();
+    public ResponseEntity<List<PostDTO>> findLastFiveDay(){
+        return new ResponseEntity<>(postService.findLastFiveDays(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -59,13 +57,13 @@ public class PostController {
 
 
     @PostMapping(value = "/{id}/tags")
-    public ResponseEntity<Boolean> assignTagToPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
-        return new ResponseEntity<>(postService.assignTagsToPost(id,tagIdList), HttpStatus.CREATED);
+    public ResponseEntity<Boolean> assignTags(@PathVariable Long id, @RequestBody List<Long> tagIdList){
+        return new ResponseEntity<>(postService.assignTags(id,tagIdList), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}/tags")
-    public ResponseEntity<Boolean> deleteTagsFromPost(@PathVariable Long id, @RequestBody List<Long> tagIdList){
-        return new ResponseEntity<>(postService.deleteTagsFromPost(id,tagIdList), HttpStatus.CREATED);
+    public ResponseEntity<Boolean> deleteTags(@PathVariable Long id, @RequestBody List<Long> tagIdList){
+        return new ResponseEntity<>(postService.deleteTags(id,tagIdList), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/{id}/comments")

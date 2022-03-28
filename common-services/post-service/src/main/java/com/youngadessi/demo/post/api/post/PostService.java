@@ -12,6 +12,7 @@ import com.youngadessi.demo.post.model.post.PostMapper;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,8 +39,10 @@ public class PostService{
         return Boolean.TRUE;
     }
 
-    public List<Post> findAll(){
-        return postRepository.findAll();
+    public List<PostDTO> findAll(){
+        List<Post> postList = postRepository.findAll();
+        List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
+        return postDTOList;
     }
 
     public Post findById(Long id){
@@ -51,24 +54,28 @@ public class PostService{
         postRepository.deleteById(id);
     }
 
-    public Post update(Long id, PostDTO postDTO){
+    public PostDTO update(Long id, PostDTO postDTO){
         Post post = this.findById(id);
-        postRepository.save(POST_MAPPER.mergePostDTOWithPost(post,postDTO));
-        return this.findById(id);
+        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(post, postDTO));
+        PostDTO updatedPostDTO = POST_MAPPER.postToPostDTO(updatedPost);
+        return updatedPostDTO;
     }
 
     public List<PostDTO> findPostsByComment(String commentText){
         List<Post> postList = commentRepository.findPostsByCommentText(commentText);
-        List<PostDTO> postDTOS = POST_MAPPER.toPostDTO(postList);
+        List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
 
-        return postDTOS;
+        return postDTOList;
     }
 
-    public List<Post> findLastFiveDays(){
-        return postRepository.findLastFiveDays();
+    public List<PostDTO> findLastFiveDays(){
+        List<Post> lastFiveDays = postRepository.findLastFiveDays();
+        List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays);
+
+        return postDTOList;
     }
 
-    public Boolean assignTagsToPost(Long postId, List<Long> tagId){
+    public Boolean assignTags(Long postId, List<Long> tagId){
         Optional<Post> post = postRepository.findById(postId);
         List<Tag> allTagById = tagRepository.findAllById(tagId);
 
@@ -78,7 +85,7 @@ public class PostService{
         return Boolean.TRUE;
     }
 
-    public Boolean deleteTagsFromPost(Long postId, List<Long> tagsToDelete){
+    public Boolean deleteTags(Long postId, List<Long> tagsToDelete){
         Optional<Post> post = postRepository.findById(postId);
 
         List<Tag> allTagById = tagRepository.findAllById(tagsToDelete);
