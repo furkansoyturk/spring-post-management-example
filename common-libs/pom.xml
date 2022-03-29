@@ -19,7 +19,6 @@
     <properties>
         <java.version>17</java.version>
     </properties>
-
     <modules>
         <module>common-model</module>
     </modules>
