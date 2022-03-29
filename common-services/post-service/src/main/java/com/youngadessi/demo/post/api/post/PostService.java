@@ -2,7 +2,7 @@ package com.youngadessi.demo.post.api.post;
 
 import com.youngadessi.demo.post.api.comment.CommentRepository;
 import com.youngadessi.demo.post.api.tag.TagRepository;
-import com.youngadessi.demo.post.exception.post.PostNotFoundException;
+import com.youngadessi.demo.post.exception.NotFoundException;
 import com.youngadessi.demo.post.model.comment.Comment;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
 import com.youngadessi.demo.post.model.comment.CommentMapper;
@@ -15,13 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class PostService {
+public class PostService extends RuntimeException {
 
     @Autowired
     PostRepository postRepository;
@@ -46,22 +45,20 @@ public class PostService {
         Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
 
         Page<Post> postPage = postRepository.findAll(firstPageWithTwoElements);
+
+        if(!postPage.isEmpty()) throw new NotFoundException("Posts not found ");
+
         List<Post> postList = postPage.getContent();
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
+
         return postDTOList;
     }
 
     public PostDTO findById(Long id) {
-        Optional<Post> optionalPost = postRepository.findById(id);
-
-        if(optionalPost.isPresent()){
-            Post post = optionalPost.get();
-            PostDTO postDTO = POST_MAPPER.postToPostDTO(post);
+        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with provided id " + id));
+        PostDTO postDTO = POST_MAPPER.postToPostDTO(post);
 
             return postDTO;
-        } else {
-            throw new PostNotFoundException(id);
-        }
     }
 
     public void deleteById(Long id) {
@@ -69,15 +66,17 @@ public class PostService {
     }
 
     public PostDTO update(Long id, PostDTO postDTO) {
-        Optional<Post> optionalPost = postRepository.findById(id);
-
-        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(optionalPost.get(), postDTO));
+        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with provided id " + id));
+        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(post, postDTO));
         PostDTO updatedPostDTO = POST_MAPPER.postToPostDTO(updatedPost);
         return updatedPostDTO;
     }
 
     public List<PostDTO> findPostsByComment(String commentText) {
         List<Post> postList = commentRepository.findPostsByCommentText(commentText);
+
+        if(!postList.isEmpty()) throw new NotFoundException("Posts not found with provided comment text: " + commentText );
+
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
 
         return postDTOList;
@@ -85,6 +84,8 @@ public class PostService {
 
     public List<PostDTO> findLastFiveDays() {
         List<Post> lastFiveDays = postRepository.findLastFiveDays();
+        if(!lastFiveDays.isEmpty()) throw new NotFoundException("Posts not found in last five days ");
+
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays);
 
         return postDTOList;
