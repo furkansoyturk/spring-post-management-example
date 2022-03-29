@@ -46,8 +46,8 @@ public class PostController {
 
     //TODO fix this return
     @GetMapping(value = "/last-five-days")
-    public ResponseEntity<List<PostDTO>> findLastFiveDay(){
-        return new ResponseEntity<>(postService.findLastFiveDays(), HttpStatus.OK);
+    public ResponseEntity<List<PostDTO>> findLastFiveDay(@RequestParam(name = "pageSize",defaultValue = "1") Integer pageSize){
+        return new ResponseEntity<>(postService.findLastFiveDays(pageSize), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
