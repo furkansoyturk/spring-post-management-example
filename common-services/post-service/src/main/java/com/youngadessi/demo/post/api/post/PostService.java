@@ -12,6 +12,9 @@ import com.youngadessi.demo.post.model.post.PostMapper;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +42,12 @@ public class PostService{
         return Boolean.TRUE;
     }
 
-    public List<PostDTO> findAll(){
-        List<Post> postList = postRepository.findAll();
+    public List<PostDTO> findAll(Integer pageSize){
+
+        Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
+
+        Page<Post> postPage = postRepository.findAll(firstPageWithTwoElements);
+        List<Post> postList = postPage.getContent();
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
         return postDTOList;
     }

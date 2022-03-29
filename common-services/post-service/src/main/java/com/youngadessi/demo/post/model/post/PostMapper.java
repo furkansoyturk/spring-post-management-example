@@ -3,7 +3,6 @@ package com.youngadessi.demo.post.model.post;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,6 +20,5 @@ public interface PostMapper {
     List<Post> mergePostDTOListWithPostList(@MappingTarget List<Post> postList, List<PostDTO> postDTOList);
 
     List<PostDTO> PostListToPostDTOList(List<Post> postList);
-
 
 }
