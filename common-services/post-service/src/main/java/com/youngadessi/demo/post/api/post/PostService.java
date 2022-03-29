@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class PostService{
+public class PostService {
 
     @Autowired
     PostRepository postRepository;
@@ -32,17 +32,16 @@ public class PostService{
     @Autowired
     CommentRepository commentRepository;
 
-//    TODO: global exception
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
     private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
 
-    public Boolean save(PostDTO postDTO){
+    public Boolean save(PostDTO postDTO) {
         postRepository.save(POST_MAPPER.postDTOToPost(postDTO));
         return Boolean.TRUE;
     }
 
-    public List<PostDTO> findAll(Integer pageSize){
+    public List<PostDTO> findAll(Integer pageSize) {
 
         Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
 
@@ -52,37 +51,46 @@ public class PostService{
         return postDTOList;
     }
 
-    public Post findById(Long id){
-        return postRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(id));
+    public PostDTO findById(Long id) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+
+        if(optionalPost.isPresent()){
+            Post post = optionalPost.get();
+            PostDTO postDTO = POST_MAPPER.postToPostDTO(post);
+
+            return postDTO;
+        } else {
+            throw new PostNotFoundException(id);
+        }
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         postRepository.deleteById(id);
     }
 
-    public PostDTO update(Long id, PostDTO postDTO){
-        Post post = this.findById(id);
-        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(post, postDTO));
+    public PostDTO update(Long id, PostDTO postDTO) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+
+        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(optionalPost.get(), postDTO));
         PostDTO updatedPostDTO = POST_MAPPER.postToPostDTO(updatedPost);
         return updatedPostDTO;
     }
 
-    public List<PostDTO> findPostsByComment(String commentText){
+    public List<PostDTO> findPostsByComment(String commentText) {
         List<Post> postList = commentRepository.findPostsByCommentText(commentText);
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
 
         return postDTOList;
     }
 
-    public List<PostDTO> findLastFiveDays(){
+    public List<PostDTO> findLastFiveDays() {
         List<Post> lastFiveDays = postRepository.findLastFiveDays();
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays);
 
         return postDTOList;
     }
 
-    public Boolean assignTags(Long postId, List<Long> tagId){
+    public Boolean assignTags(Long postId, List<Long> tagId) {
         Optional<Post> post = postRepository.findById(postId);
         List<Tag> allTagById = tagRepository.findAllById(tagId);
 
@@ -92,7 +100,7 @@ public class PostService{
         return Boolean.TRUE;
     }
 
-    public Boolean deleteTags(Long postId, List<Long> tagsToDelete){
+    public Boolean deleteTags(Long postId, List<Long> tagsToDelete) {
         Optional<Post> post = postRepository.findById(postId);
 
         List<Tag> allTagById = tagRepository.findAllById(tagsToDelete);
@@ -104,7 +112,7 @@ public class PostService{
             Tag existingTag = postTags.get(i);
             for (int j = 0; j < allTagById.size(); j++) {
                 Tag tagToDelete = allTagById.get(j);
-                if( existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
+                if (existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
                     postTags.remove(existingTag);
                 }
             }
@@ -116,12 +124,14 @@ public class PostService{
     }
 
 
-    public Boolean comment(Long postId, CommentDTO commentDTO){
+    public Boolean comment(Long postId, CommentDTO commentDTO) {
 
-        Post postById = this.findById(postId);
+//        Post postById = this.findById(postId);
+        Optional<Post> postById = postRepository.findById(postId);
 
         Comment comment = COMMENT_MAPPER.commentDTOTOComment(commentDTO);
-        comment.setPost(postById);
+//        comment.setPost(postById);
+        comment.setPost(postById.get());
         commentRepository.save(comment);
 
         return Boolean.TRUE;
