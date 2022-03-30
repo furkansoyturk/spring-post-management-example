@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
 
-    @Query( value = "SELECT * FROM post_schema.tbl_post WHERE created_date_time > cast(now() as DATE) - 50  OFFSET :pageNumber ROWS FETCH NEXT :PageSize ROWS ONLY", nativeQuery = true)
-    public List<Post> findLastFiveDays(@Param("pageNumber") Integer pageNumber, @Param("PageSize") Integer PageSize);
+    @Query( value = "SELECT * FROM post_schema.tbl_post WHERE created_date_time > cast(now() as DATE) - 50  OFFSET :1 ROWS FETCH NEXT :pageSize ROWS ONLY", nativeQuery = true)
+    public List<Post> findLastFiveDays(@Param("pageNumber") Integer pageNumber, @Param("pageSize") Integer pageSize);
 
 }

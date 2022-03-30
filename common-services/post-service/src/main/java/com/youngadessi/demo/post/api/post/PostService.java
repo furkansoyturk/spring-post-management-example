@@ -86,9 +86,9 @@ public class PostService extends RuntimeException {
         return postDTOList;
     }
 
-    public List<PostDTO> findLastFiveDays(Integer pageSize) {
-        Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
-        List<Post> lastFiveDays = postRepository.findLastFiveDays(firstPageWithTwoElements);
+
+    public List<PostDTO> findLastFiveDays(Integer pageNumber,Integer pageSize) {
+        List<Post> lastFiveDays = postRepository.findLastFiveDays(pageNumber, pageSize);
 
         if(lastFiveDays.isEmpty()) {
             throw new NotFoundException("Posts not found in last five days ");
