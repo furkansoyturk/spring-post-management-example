@@ -31,14 +31,10 @@ public class JWTController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<JWTResponseDTO> createToken(@RequestBody JWTRequestDTO
-                                                request) throws Exception {
+    public ResponseEntity<JWTResponseDTO> createToken(@RequestBody JWTRequestDTO request) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new
-                            UsernamePasswordAuthenticationToken(request.getUsername(),
-                            request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

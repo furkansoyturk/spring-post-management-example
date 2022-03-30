@@ -46,7 +46,9 @@ public class PostService extends RuntimeException {
 
         Page<Post> postPage = postRepository.findAll(firstPageWithTwoElements);
 
-        if(!postPage.isEmpty()) throw new NotFoundException("Posts not found ");
+        if(postPage.isEmpty()) {
+            throw new NotFoundException("Posts not found ");
+        }
 
         List<Post> postList = postPage.getContent();
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
@@ -75,7 +77,9 @@ public class PostService extends RuntimeException {
     public List<PostDTO> findPostsByComment(String commentText) {
         List<Post> postList = commentRepository.findPostsByCommentText(commentText);
 
-        if(!postList.isEmpty()) throw new NotFoundException("Posts not found with provided comment text: " + commentText );
+        if(postList.isEmpty()) {
+            throw new NotFoundException("Posts not found with provided comment text: " + commentText );
+        }
 
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(postList);
 
@@ -86,8 +90,9 @@ public class PostService extends RuntimeException {
         Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
         List<Post> lastFiveDays = postRepository.findLastFiveDays(firstPageWithTwoElements);
 
-        if(!lastFiveDays.isEmpty()) throw new NotFoundException("Posts not found in last five days ");
-
+        if(lastFiveDays.isEmpty()) {
+            throw new NotFoundException("Posts not found in last five days ");
+        }
         List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays);
 
         return postDTOList;
