@@ -19,6 +19,7 @@ public class JWTFilter extends OncePerRequestFilter{
 
     @Autowired
     private JWTUserDetailsService JWTUserDetailsService;
+
     @Autowired
     private JWTManager JWTManager;
 

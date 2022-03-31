@@ -7,8 +7,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.LockInfo;
-
 @Service
 public class CommentService {
 
@@ -20,8 +18,8 @@ public class CommentService {
 
     public Boolean update(Long id, CommentDTO commentDTO){
 
-        Comment comment = commentRepository.getById(id);
-        commentRepository.save(COMMENT_MAPPER.mergeCommentWithCommentDTO(comment, commentDTO));
+        Comment comment = commentRepository.findById(id).orElseThrow(RuntimeException::new);
+        commentRepository.save(COMMENT_MAPPER.dtoToEntity(comment, commentDTO));
 
         return Boolean.TRUE;
     }

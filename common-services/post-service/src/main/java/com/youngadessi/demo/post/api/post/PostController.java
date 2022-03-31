@@ -4,6 +4,7 @@ import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,10 @@ public class PostController {
 
     private final PostService postService;
 
+    //Pageable
     @GetMapping
-    public ResponseEntity<List<PostDTO>> findAll(@RequestParam(name = "pageSize",defaultValue = "1") Integer pageSize){
-        return new ResponseEntity<>(postService.findAll(pageSize), HttpStatus.OK);
+    public ResponseEntity<List<PostDTO>> findAll(Pageable pageable){
+        return new ResponseEntity<>(postService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

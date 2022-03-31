@@ -14,6 +14,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
+//    handler mapping
+//    client request -> servlet container(tomcat) -> java app (dispatcherservlet)
+//    http://localhost:8081/post-service/comments/1 PUT
     @PutMapping(value = "/{id}")
     public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
         return new ResponseEntity<>(commentService.update(id,commentDTO), HttpStatus.OK);

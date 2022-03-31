@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -40,10 +41,9 @@ public class PostService extends RuntimeException {
         return Boolean.TRUE;
     }
 
-    public List<PostDTO> findAll(Integer pageSize) {
+    public List<PostDTO> findAll(Pageable  pageable) {
 
-        Pageable pageSizeRequest = PageRequest.of(0, pageSize);
-        Page<Post> postPage = postRepository.findAll(pageSizeRequest);
+        Page<Post> postPage = postRepository.findAll(pageable);
 
         if(postPage.isEmpty()) {
             throw new NotFoundException("Posts not found ");
@@ -68,9 +68,8 @@ public class PostService extends RuntimeException {
 
     public PostDTO update(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with provided id " + id));
-        Post updatedPost = postRepository.save(POST_MAPPER.mergePostDTOWithPost(post, postDTO));
-        PostDTO updatedPostDTO = POST_MAPPER.postToPostDTO(updatedPost);
-        return updatedPostDTO;
+        post = postRepository.save(POST_MAPPER.mergePostDTOWithPost(post, postDTO));
+        return POST_MAPPER.postToPostDTO(post);
     }
 
     public List<PostDTO> findPostsByComment(String commentText) {
@@ -109,25 +108,34 @@ public class PostService extends RuntimeException {
         return Boolean.TRUE;
     }
 
+    @Transactional
     public Boolean deleteTags(Long postId, List<Long> tagsToDelete) {
-        Optional<Post> post = postRepository.findById(postId);
 
-        List<Tag> allTagById = tagRepository.findAllById(tagsToDelete);
+        Post post = postRepository.findById(postId).orElseThrow(RuntimeException::new);
 
-        int postTagCount = post.get().getPostTags().size();
-        List<Tag> postTags = Arrays.asList(new Tag[postTagCount]);
+        List<Tag> tagsToBeDeleted = tagRepository.findByIdIn(tagsToDelete);
 
-        for (int i = 0; i < postTags.size(); i++) {
-            Tag existingTag = postTags.get(i);
-            for (int j = 0; j < allTagById.size(); j++) {
-                Tag tagToDelete = allTagById.get(j);
-                if (existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
-                    postTags.remove(existingTag);
-                }
-            }
-        }
-        post.get().setPostTags(postTags);
-        postRepository.save(post.get());
+        post.getPostTags().removeAll(tagsToBeDeleted);
+
+        postRepository.save(post);
+
+
+//        List<Tag> allTagById = tagRepository.findAllById(tagsToDelete);
+//
+//        int postTagCount = post.get().getPostTags().size();
+//        List<Tag> postTags = Arrays.asList(new Tag[postTagCount]);
+//
+//        for (int i = 0; i < postTags.size(); i++) {
+//            Tag existingTag = postTags.get(i);
+//            for (int j = 0; j < allTagById.size(); j++) {
+//                Tag tagToDelete = allTagById.get(j);
+//                if (existingTag != null && existingTag.getId().intValue() == tagToDelete.getId().intValue()) {
+//                    postTags.remove(existingTag);
+//                }
+//            }
+//        }
+//        post.get().setPostTags(postTags);
+//        postRepository.save(post.get());
 
         return Boolean.TRUE;
     }
