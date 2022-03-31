@@ -42,9 +42,8 @@ public class PostService extends RuntimeException {
 
     public List<PostDTO> findAll(Integer pageSize) {
 
-        Pageable firstPageWithTwoElements = PageRequest.of(0, pageSize);
-
-        Page<Post> postPage = postRepository.findAll(firstPageWithTwoElements);
+        Pageable pageSizeRequest = PageRequest.of(0, pageSize);
+        Page<Post> postPage = postRepository.findAll(pageSizeRequest);
 
         if(postPage.isEmpty()) {
             throw new NotFoundException("Posts not found ");
@@ -87,13 +86,15 @@ public class PostService extends RuntimeException {
     }
 
 
-    public List<PostDTO> findLastFiveDays(Integer pageNumber,Integer pageSize) {
-        List<Post> lastFiveDays = postRepository.findLastFiveDays(pageNumber, pageSize);
+    public List<PostDTO> findLastFiveDays(Integer pageSize) {
+        Pageable pageSizeRequest = PageRequest.of(0, pageSize);
+        Page<Post> lastFiveDays = postRepository.findLastFiveDays(pageSizeRequest);
+
 
         if(lastFiveDays.isEmpty()) {
             throw new NotFoundException("Posts not found in last five days ");
         }
-        List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays);
+        List<PostDTO> postDTOList = POST_MAPPER.PostListToPostDTOList(lastFiveDays.getContent());
 
         return postDTOList;
     }
