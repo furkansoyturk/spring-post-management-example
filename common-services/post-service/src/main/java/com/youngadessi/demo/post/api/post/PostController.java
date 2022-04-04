@@ -47,8 +47,8 @@ public class PostController {
     }
 
     @GetMapping(value = "/last-five-days")
-    public ResponseEntity<List<PostDTO>> findLastFiveDay(@RequestParam(name = "pageSize", required = false, defaultValue = "1") Integer pageSize){
-        return new ResponseEntity<>(postService.findLastFiveDays(pageSize), HttpStatus.OK);
+    public ResponseEntity<List<PostDTO>> findLastFiveDay(Pageable pageable){
+        return new ResponseEntity<>(postService.findLastFiveDays(pageable), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

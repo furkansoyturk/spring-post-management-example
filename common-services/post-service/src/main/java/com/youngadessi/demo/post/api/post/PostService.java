@@ -85,9 +85,8 @@ public class PostService extends RuntimeException {
     }
 
 
-    public List<PostDTO> findLastFiveDays(Integer pageSize) {
-        Pageable pageSizeRequest = PageRequest.of(0, pageSize);
-        Page<Post> lastFiveDays = postRepository.findLastFiveDays(pageSizeRequest);
+    public List<PostDTO> findLastFiveDays(Pageable pageable) {
+        Page<Post> lastFiveDays = postRepository.findLastFiveDays(pageable);
 
 
         if(lastFiveDays.isEmpty()) {
