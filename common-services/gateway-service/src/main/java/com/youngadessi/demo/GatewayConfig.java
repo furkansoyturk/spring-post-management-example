@@ -5,26 +5,28 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.http.codec.ServerCodecConfigurer;
+import org.springframework.stereotype.Component;
+
 
 @Configuration
-@EnableWebSecurity
+@Component
 public class GatewayConfig {
 
     @Autowired
-    AuthenticationFilter filter;
+    private  JwtAuthenticationFilter filter;
+
+    @Bean
+    public ServerCodecConfigurer serverCodecConfigurer() {
+        return ServerCodecConfigurer.create();
+    }
+
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route("post-service", r -> r.path("/post-service/**")
-                        .filters(f -> f.filter(filter))
-                        .uri("http://localhost:8081/"))
-
-                .route("auth-service", r -> r.path("/auth-service/**")
-                        .filters(f -> f.filter(filter))
-                        .uri("http://localhost:8083/"))
-                .build();
+        return builder.routes().route("auth", r -> r.path("/auth/**").filters(f -> f.filter(filter)).uri("lb://auth"))
+                .route("post-service", r -> r.path("/post-service/**").filters(f -> f.filter(filter)).uri("lb://post-service")).build();
     }
 
 }
+

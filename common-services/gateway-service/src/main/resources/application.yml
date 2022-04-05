@@ -1,23 +1,26 @@
-server:
-  port: 8080
+#eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
+
+#secret key - should be encrypted
+#jwt.secret=secretkey
+#ignore null fields in json
+#spring.jackson.default-property-inclusion=NON_NULL
+#spring.cloud.compatibility-verifier.enabled=false
 spring:
-  profiles:
-    include: sql #,script
-
+  jackson:
+    default-property-inclusion: NON_NULL
   cloud:
-    gateway:
-      routes:
-        - id: post-service
-          uri: http://localhost:8081/
-          predicates:
-            - Path=/post/**
-
-        - id: auth-service
-          uri: http://localhost:8083/
-          predicates:
-            - Path=/auth/login
+    compatibility-verifier:
+      enabled: false
+  application:
+    name: eureka
+server:
+  port: 8761
 
 
-  main:
-    web-application-type: reactive
-    allow-bean-definition-overriding: true
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default-zone: http://localhost:8761/eureka

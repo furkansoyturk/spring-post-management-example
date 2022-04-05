@@ -9,18 +9,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-
-
     <artifactId>auth-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>auth-service</name>
     <description>auth-service</description>
 
-
     <properties>
         <java.version>17</java.version>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -34,35 +30,35 @@
             <scope>test</scope>
         </dependency>
 
-
         <dependency>
-            <groupId>com.youngadessi.demo</groupId>
-            <artifactId>common-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
 
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2020.0.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>
