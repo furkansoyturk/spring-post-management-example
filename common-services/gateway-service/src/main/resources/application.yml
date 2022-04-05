@@ -16,8 +16,6 @@ spring:
           uri: http://localhost:8083/
           predicates:
             - Path=/auth/login
-
-
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true
