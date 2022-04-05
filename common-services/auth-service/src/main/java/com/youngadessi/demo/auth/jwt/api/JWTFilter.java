@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.auth.jwt.api;
+package com.youngadessi.demo.auth.jwt.api;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

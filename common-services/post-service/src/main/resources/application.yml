@@ -4,6 +4,8 @@ server:
     context-path: /post-service
 
 spring:
+  application:
+    name: post-service
   profiles:
     include: sql #,script
   jpa:

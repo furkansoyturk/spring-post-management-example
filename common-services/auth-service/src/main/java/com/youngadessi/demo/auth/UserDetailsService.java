@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.auth;
+package com.youngadessi.demo.auth;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

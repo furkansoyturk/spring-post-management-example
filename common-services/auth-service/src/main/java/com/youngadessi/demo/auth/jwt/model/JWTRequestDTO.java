@@ -1,4 +1,4 @@
-package com.youngadessi.demo.post.auth.jwt.model;
+package com.youngadessi.demo.auth.jwt.model;
 
 import lombok.Getter;
 import lombok.Setter;

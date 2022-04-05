@@ -1,9 +1,7 @@
-package com.youngadessi.demo.post.auth.jwt.api;
+package com.youngadessi.demo.auth.jwt.api;
 
-import com.youngadessi.demo.post.api.post.PostService;
-import com.youngadessi.demo.post.auth.WebSecurityConfig;
-import com.youngadessi.demo.post.auth.jwt.model.JWTRequestDTO;
-import com.youngadessi.demo.post.auth.jwt.model.JWTResponseDTO;
+import com.youngadessi.demo.auth.jwt.model.JWTRequestDTO;
+import com.youngadessi.demo.auth.jwt.model.JWTResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

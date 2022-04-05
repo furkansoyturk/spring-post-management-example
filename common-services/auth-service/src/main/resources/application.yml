@@ -1,0 +1,13 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /auth-service
+
+spring:
+  application:
+    name: auth-service
+  profiles:
+    include: sql #,script
+#  jpa:
+#    properties:
+#      hibernate.default_schema: post_schema
