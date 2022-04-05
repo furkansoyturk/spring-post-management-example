@@ -11,12 +11,20 @@ public class RouterValidator {
 
     public static final List<String> openApiEndpoints= List.of(
             "/auth/register",
-            "/auth/login"
+            "/auth-service/login"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints
                     .stream()
                     .noneMatch(uri -> request.getURI().getPath().contains(uri));
-
 }
+
+// http.csrf().disable()
+//         .authorizeRequests().antMatchers("/login").permitAll()
+//         .anyRequest().authenticated()
+//         .and()
+//         .exceptionHandling().authenticationEntryPoint(JWTauthenticationEntryPoint)
+//         .and()
+//         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//         http.addFilterBefore(JWTFilter, UsernamePasswordAuthenticationFilter.class);

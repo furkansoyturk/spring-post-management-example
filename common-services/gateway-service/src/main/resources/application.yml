@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9000
 spring:
   profiles:
     include: sql #,script
@@ -8,14 +8,14 @@ spring:
     gateway:
       routes:
         - id: post-service
-          uri: http://localhost:8081/
+          uri: http://localhost:8086/
           predicates:
             - Path=/post/**
 
         - id: auth-service
-          uri: http://localhost:8083/
+          uri: http://localhost:8085/
           predicates:
-            - Path=/auth/login
+            - Path=/auth-service/login
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true

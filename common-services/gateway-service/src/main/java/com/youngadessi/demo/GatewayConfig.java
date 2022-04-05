@@ -22,7 +22,7 @@ public class GatewayConfig {
                         .uri("http://localhost:8081/"))
 
                 .route("auth-service", r -> r.path("/auth-service/**")
-                        .filters(f -> f.filter(filter))
+//                        .filters(f -> f.filter(filter))
                         .uri("http://localhost:8083/"))
                 .build();
     }

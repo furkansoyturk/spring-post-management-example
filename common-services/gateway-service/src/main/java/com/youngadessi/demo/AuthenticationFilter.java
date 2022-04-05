@@ -2,6 +2,7 @@ package com.youngadessi.demo;
 
 import com.youngadessi.demo.auth.jwt.api.JWTManager;
 import com.youngadessi.demo.auth.jwt.api.JWTUserDetailsService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -30,6 +31,7 @@ public class AuthenticationFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
+
         if (routerValidator.isSecured.test(request)) {
             if (this.isAuthMissing(request))
                 return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
@@ -49,7 +51,7 @@ public class AuthenticationFilter implements GatewayFilter {
         return chain.filter(exchange);
     }
 
-    /*PRIVATE*/
+
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
@@ -66,7 +68,7 @@ public class AuthenticationFilter implements GatewayFilter {
     }
 
 //    private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
-//        Claims claims = jwtUtil.getAllClaimsFromToken(token);
+//        Claims claims = jwtManager.validateJwtToken(token, exchange);
 //        exchange.getRequest().mutate()
 //                .header("id", String.valueOf(claims.get("id")))
 //                .header("role", String.valueOf(claims.get("role")))
