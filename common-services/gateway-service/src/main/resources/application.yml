@@ -4,18 +4,19 @@ spring:
   profiles:
     include: sql #,script
 
+
   cloud:
     gateway:
       routes:
         - id: post-service
           uri: http://localhost:8086/
           predicates:
-            - Path=/post/**
+            - Path=/post-service/**
 
         - id: auth-service
           uri: http://localhost:8085/
           predicates:
-            - Path=/auth-service/login
+            - Path=/auth-service/**
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true
