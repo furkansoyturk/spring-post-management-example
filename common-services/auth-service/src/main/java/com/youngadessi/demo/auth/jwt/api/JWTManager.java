@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -34,5 +36,16 @@ public class JWTManager implements Serializable {
         return claims.getSubject();
     }
 
+    public Claims getClaims(String token){
+
+        try {
+            Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+            return claims;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return null;
+    }
 
 }

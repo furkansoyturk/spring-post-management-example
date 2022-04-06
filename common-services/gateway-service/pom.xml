@@ -47,7 +47,13 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-<!--        <dependency>-->
+        <dependency>
+            <groupId>com.youngadessi.demo</groupId>
+            <artifactId>auth-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--        <dependency>-->
 <!--            <groupId>com.youngadessi.demo</groupId>-->
 <!--            <artifactId>auth-service</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
