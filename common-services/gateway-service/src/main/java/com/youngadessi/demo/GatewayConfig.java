@@ -31,18 +31,22 @@ import reactor.core.publisher.Mono;
 //import org.springframework.web.server.ServerWebExchange;
 //import reactor.core.publisher.Mono;
 //
-//@Configuration
 //@EnableGlobalMethodSecurity(jsr250Enabled = true)
 
 //@EnableWebSecurity
 //@Order(100)
-public class GatewayConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableWebSecurity
+@EnableWebFluxSecurity
+public class GatewayConfig  {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/login").permitAll();
+    @Bean
+    SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) throws Exception {
+        return http.csrf().disable()
+                .authorizeExchange().pathMatchers("/login").permitAll()
+                .anyExchange().authenticated()
+                .and()
+                .build();
     }
 
 

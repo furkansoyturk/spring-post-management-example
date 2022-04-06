@@ -24,7 +24,7 @@
         <module>gateway-service</module>
         <module>post-service</module>
         <module>user-service</module>
-        <module>auth-service</module>
+
     </modules>
 
 </project>
