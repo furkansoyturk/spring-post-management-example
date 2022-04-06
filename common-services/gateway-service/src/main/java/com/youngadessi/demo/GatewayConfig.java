@@ -1,5 +1,8 @@
 package com.youngadessi.demo;
 
+import com.youngadessi.demo.auth.jwt.api.JWTAuthenticationEntryPoint;
+import com.youngadessi.demo.auth.jwt.api.JWTFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -18,7 +21,11 @@ import org.springframework.security.web.server.util.matcher.NegatedServerWebExch
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.util.logging.Filter;
 
 //
 //import org.springframework.cloud.gateway.config.GatewayAutoConfiguration;
@@ -36,7 +43,7 @@ import reactor.core.publisher.Mono;
 //@EnableWebSecurity
 //@Order(100)
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @EnableWebFluxSecurity
 public class GatewayConfig  {
 
@@ -47,8 +54,8 @@ public class GatewayConfig  {
                 .anyExchange().authenticated()
                 .and()
                 .build();
-    }
 
+    }
 
 ////    @Override
 ////    protected void configure(HttpSecurity security) throws Exception
