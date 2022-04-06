@@ -1,9 +1,9 @@
 server:
   port: 9000
+
 spring:
   profiles:
     include: sql #,script
-
 
   cloud:
     gateway:
@@ -13,10 +13,13 @@ spring:
           predicates:
             - Path=/post-service/**
 
-        - id: auth-service
-          uri: http://localhost:8085/
-          predicates:
-            - Path=/auth-service/**
+#        - id: auth-service
+#          uri: http://localhost:8085/
+#          predicates:
+#            - Path=/auth-service/**
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true
+
+    security:
+      ignored: /**
