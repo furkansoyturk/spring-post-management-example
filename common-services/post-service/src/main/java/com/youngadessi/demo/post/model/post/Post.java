@@ -1,8 +1,12 @@
-package com.youngadessi.demo.post.model;
+package com.youngadessi.demo.post.model.post;
 
 import com.youngadessi.demo.model.BaseEntity;
+import com.youngadessi.demo.post.model.tag.Tag;
+import com.youngadessi.demo.post.model.comment.Comment;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
