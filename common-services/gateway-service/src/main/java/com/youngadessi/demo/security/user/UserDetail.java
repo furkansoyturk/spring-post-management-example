@@ -1,4 +1,4 @@
-package com.youngadessi.demo.auth.jwt.api;
+package com.youngadessi.demo.security.user;
 
 import java.util.ArrayList;
 import org.springframework.security.core.userdetails.User;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 @Service
-public class JWTUserDetailsService implements UserDetailsService {
+public class UserDetail implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if ("test".equals(username)) {
@@ -20,4 +20,3 @@ public class JWTUserDetailsService implements UserDetailsService {
     }
 
 }
-

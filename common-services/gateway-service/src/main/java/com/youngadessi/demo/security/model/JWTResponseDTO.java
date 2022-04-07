@@ -1,7 +1,5 @@
-package com.youngadessi.demo.auth.jwt.model;
+package com.youngadessi.demo.security.model;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
