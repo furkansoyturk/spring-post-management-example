@@ -1,4 +1,4 @@
-package com.youngadessi.demo.authservice.auth.jwt.api;
+package com.youngadessi.demo.authservice.auth.jwt;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

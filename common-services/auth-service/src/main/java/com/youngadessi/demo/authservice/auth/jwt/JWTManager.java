@@ -1,4 +1,4 @@
-package com.youngadessi.demo.authservice.auth.jwt.api;
+package com.youngadessi.demo.authservice.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
