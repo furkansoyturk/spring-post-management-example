@@ -1,19 +1,18 @@
 package com.youngadessi.demo.security.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 
 @Service
-//public class UserService implements UserDetailsService {
-public class UserService{
+public class UserService {
 
     private Map<String, User> data;
 
@@ -21,16 +20,17 @@ public class UserService{
     public void init() {
         data = new HashMap<>();
 
-        data.put("user", new User("test", "12345678",
-                new ArrayList<>()));
+        //username:passwowrd -> user:user
+        data.put("user", new User("user", "cBrlgyL2GI2GINuLUUwgojITuIufFycpLG4490dhGtY=", true, Arrays.asList(Role.ROLE_USER)));
 
+        //username:passwowrd -> admin:admin
 //        data.put("admin", new User("admin", "dQNjUIMorJb8Ubj2+wVGYp6eAeYkdekqAcnYp+aRq5w=", true, Arrays.asList(Role.ROLE_ADMIN)));
     }
 
     public Mono<User> findByUsername(String username) {
         return Mono.justOrEmpty(data.get(username));
     }
-
+}
 
 
 //    @Override
@@ -43,4 +43,3 @@ public class UserService{
 //            throw new UsernameNotFoundException("User not found with username: " + username);
 //        }
 //    }
-}

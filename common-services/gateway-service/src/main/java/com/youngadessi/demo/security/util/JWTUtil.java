@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import com.youngadessi.demo.security.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -48,21 +49,11 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
-//    public String generateToken() {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-//        claims.put("role", user.getRoles());
-        claims.put("role", "test");
-        return doGenerateToken(claims, userDetails.getUsername());
+        claims.put("role", user.getRoles());
+        return doGenerateToken(claims, user.getUsername());
     }
-
-//    public String generateJwtToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
-//                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
-//    }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
         Long expirationTimeLong = Long.parseLong(expirationTime); //in second
@@ -83,3 +74,12 @@ public class JWTUtil {
     }
 
 }
+
+
+//    public String generateJwtToken(UserDetails userDetails) {
+//        Map<String, Object> claims = new HashMap<>();
+//        return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
+//                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+//    }
