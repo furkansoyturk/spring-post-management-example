@@ -1,7 +1,7 @@
-package com.youngadessi.demo.post.auth;
+package com.youngadessi.demo.authservice.auth.config;
 
-import com.youngadessi.demo.post.auth.jwt.api.JWTAuthenticationEntryPoint;
-import com.youngadessi.demo.post.auth.jwt.api.JWTFilter;
+import com.youngadessi.demo.authservice.auth.jwt.api.JWTAuthenticationEntryPoint;
+import com.youngadessi.demo.authservice.auth.jwt.api.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
