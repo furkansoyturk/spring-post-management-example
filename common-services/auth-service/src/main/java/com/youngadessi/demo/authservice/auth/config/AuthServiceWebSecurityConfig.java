@@ -1,10 +1,8 @@
-package com.youngadessi.demo.post.config;
+package com.youngadessi.demo.authservice.auth.config;
 
 import com.youngadessi.demo.authservice.auth.jwt.JWTAuthenticationEntryPoint;
 import com.youngadessi.demo.authservice.auth.jwt.JWTFilter;
-import com.youngadessi.demo.authservice.auth.jwt.JWTManager;
-import com.youngadessi.demo.authservice.auth.jwt.JWTUserDetailsService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,35 +10,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 @Configuration
-@Component
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class AuthServiceWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private JWTAuthenticationEntryPoint JWTauthenticationEntryPoint;
 
-    @Bean
-    public JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint(){
-        return new JWTAuthenticationEntryPoint();
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-    @Bean
-    public JWTUserDetailsService jwtUserDetailsService(){
-        return new JWTUserDetailsService();
-    }
-
-    @Bean
-    public JWTManager jwtManager(){
-        return new JWTManager();
-    }
-
-    @Bean
-    public JWTFilter jwtFilter(){
-        return new JWTFilter();
-    }
+    @Autowired
+    private JWTFilter JWTFilter;
 
 
     public PasswordEncoder passwordEncoder() {
@@ -49,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService()).passwordEncoder(this.passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(this.passwordEncoder());
     }
 
     @Bean
@@ -62,12 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
+                .authorizeRequests().antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint())
+                .exceptionHandling().authenticationEntryPoint(JWTauthenticationEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(JWTFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
