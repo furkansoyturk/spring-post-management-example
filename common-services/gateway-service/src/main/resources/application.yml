@@ -11,9 +11,9 @@ spring:
         - id: auth
           uri: http://localhost:8085/
           predicates:
-            - Path=/auth-service/login
-          filters:
-            - CustomFilter
+            - Path=/auth-service/**
+#          filters:
+#            - CustomFilter
         - id: post
           uri: http://localhost:8088/
           predicates:
