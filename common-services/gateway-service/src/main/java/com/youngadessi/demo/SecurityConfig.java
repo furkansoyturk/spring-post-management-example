@@ -11,14 +11,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(
-            ServerHttpSecurity http) {
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.httpBasic().disable().csrf().disable()
                 .authorizeExchange()
                 .pathMatchers("/auth-service/login").permitAll();
