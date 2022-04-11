@@ -3,7 +3,7 @@ server:
 
 spring:
   main:
-    allow-bean-definition-overriding: true
+#    allow-bean-definition-overriding: true
     web-application-type: reactive
   cloud:
     gateway:
@@ -12,7 +12,12 @@ spring:
           uri: http://localhost:8085/
           predicates:
             - Path=/auth-service/login
+          filters:
+            - CustomFilter
         - id: post
           uri: http://localhost:8088/
           predicates:
             - Path=/post-service/**
+          filters:
+            - CustomFilter
+
