@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class JwtValidate {
+public class ValidationService {
 
     public int validate(String jwtToken) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder().build();

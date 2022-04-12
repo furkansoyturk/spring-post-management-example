@@ -46,17 +46,6 @@ public class JWTController {
 
     @PostMapping("/validate")
     public ResponseEntity<Boolean> validateToken(){
-//        String usernameFromToken = JWTManager.getUsernameFromToken(jwtResponseDTO.getToken());
-//        String usernameFromToken = JWTManager.getUsernameFromToken(jwtResponseDTO.getToken());
-        System.out.println("test");
-//        UserDetails userDetails = JWTUserDetailsService.loadUserByUsername(usernameFromToken);
-//
-//        Boolean isTokenValidated = JWTManager.validateJwtToken(jwtResponseDTO.getToken(), userDetails);
-
-//        if(isTokenValidated){
-//            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
-//        }
-//        else return new ResponseEntity<>(Boolean.FALSE, HttpStatus.FORBIDDEN);
          return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 
