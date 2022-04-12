@@ -35,14 +35,13 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
                 }else{
 
                     String jwtToken = authorization.get(0);
+
                     if (validationService.validate(jwtToken) == 200 ){
                         exchange.getResponse().setStatusCode(HttpStatus.ACCEPTED);
                         return chain.filter(exchange);
                     }
+
                     if (validationService.validate(jwtToken) ==401){
-                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    }
-                    if(validationService.validate(jwtToken) == 500){
                         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     }
                 }
