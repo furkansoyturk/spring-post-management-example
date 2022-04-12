@@ -27,9 +27,7 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
 
         return (exchange, chain) -> {
             try {
-
-                ServerHttpRequest serverHttpRequest = exchange.getRequest();
-                List<String> authorization = serverHttpRequest.getHeaders().getOrEmpty("Authorization");
+                List<String> authorization = exchange.getRequest().getHeaders().getOrEmpty("Authorization");
                 boolean isHeaderEmpty = authorization.isEmpty();
 
                 if(isHeaderEmpty){
