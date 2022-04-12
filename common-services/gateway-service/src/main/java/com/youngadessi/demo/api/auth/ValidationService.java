@@ -1,4 +1,4 @@
-package com.youngadessi.demo;
+package com.youngadessi.demo.api.auth;
 
 import okhttp3.*;
 import org.springframework.stereotype.Service;

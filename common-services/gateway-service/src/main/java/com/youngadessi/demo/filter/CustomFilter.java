@@ -1,5 +1,6 @@
-package com.youngadessi.demo;
+package com.youngadessi.demo.filter;
 
+import com.youngadessi.demo.api.auth.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
