@@ -9,6 +9,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
@@ -26,23 +27,34 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
 
         return (exchange, chain) -> {
             try {
-                ServerHttpRequest serverHttpRequest = exchange.getRequest();
-                String jwtToken = serverHttpRequest.getHeaders().getFirst("Authorization");
 
-                if (validationService.validate(jwtToken) == 200 ){
-                    exchange.getResponse().setStatusCode(HttpStatus.OK);
-                }
-                if (validationService.validate(jwtToken) ==401){
+                ServerHttpRequest serverHttpRequest = exchange.getRequest();
+                List<String> authorization = serverHttpRequest.getHeaders().getOrEmpty("Authorization");
+                boolean isHeaderEmpty = authorization.isEmpty();
+
+                if(isHeaderEmpty){
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                }else{
+
+                    String jwtToken = authorization.get(0);
+                    if (validationService.validate(jwtToken) == 200 ){
+                        exchange.getResponse().setStatusCode(HttpStatus.ACCEPTED);
+                        return chain.filter(exchange);
+                    }
+                    if (validationService.validate(jwtToken) ==401){
+                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    }
+                    if(validationService.validate(jwtToken) == 500){
+                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    }
                 }
-                if(validationService.validate(jwtToken) == 500){
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                }
+
+
 
             } catch (IOException e) {
                 throw new RuntimeException();
             }
-            return chain.filter(exchange);
+            return exchange.getResponse().setComplete();
         };
     }
 
