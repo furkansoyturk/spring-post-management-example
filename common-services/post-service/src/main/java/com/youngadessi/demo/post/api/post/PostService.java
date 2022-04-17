@@ -59,7 +59,7 @@ public class PostService extends RuntimeException {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with provided id " + id));
         PostDTO postDTO = POST_MAPPER.postToPostDTO(post);
 
-            return postDTO;
+        return postDTO;
     }
 
     public void deleteById(Long id) {
