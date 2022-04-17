@@ -26,7 +26,7 @@ public class PostServiceTest {
             postDTO.setCreatedByName("efe");
             postService.save(postDTO);
 
-        PostDTO byId = postService.findById(1L);
+        PostDTO byId = postService.findById(11L);
         if(Objects.equals(postDTO.getContent(), byId.getContent())){
             assertThat(Boolean.TRUE).isTrue();
         } else {
