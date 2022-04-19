@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.gson.Gson;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
@@ -21,25 +22,29 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@WebMvcTest(PostController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class PostControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    PostService postService;
+    private PostService postService;
 
     @Test
     void test() throws Exception {
-        RequestBuilder request = get("/test/")
-                .accept(MediaType.APPLICATION_JSON);
+        // post-service/posts/test
+        MvcResult result = mockMvc.perform(
+                get("/posts/test")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        MvcResult result = mockMvc.perform(request).andReturn();
-        String contentAsString = result.getResponse().getContentAsString();
-        assert ("test").equals(contentAsString);
+        assert ("test").equals(result.getResponse().getContentAsString());
     }
 
     @Test
@@ -49,16 +54,13 @@ public class PostControllerTest {
         postDTO.setContent("post1");
         postDTO.setCreatedByName("ali");
 
+        String serializedPostDTO = new Gson().toJson(postDTO);
+
         when(postService.findById(3L)).thenReturn(postDTO);
 
-        RequestBuilder request = get("/post-service/posts/3")
-                .accept(MediaType.APPLICATION_JSON);
-
-        MvcResult result = mockMvc.perform(request)
-            .andExpect(content().json("{\"content\":\"post1\",\"createdByName\":\"ali\"}"))
-            .andReturn();
-
-        MockHttpServletResponse response = result.getResponse();
-        System.out.println(response);
+        mockMvc.perform(get("/posts/3"))
+                .andExpect(content()
+                .json(serializedPostDTO))
+                .andReturn();
     }
 }
