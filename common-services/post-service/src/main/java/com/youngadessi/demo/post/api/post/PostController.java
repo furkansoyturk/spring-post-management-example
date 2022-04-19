@@ -19,6 +19,12 @@ public class PostController {
 
     private final PostService postService;
 
+    @GetMapping(value = "/test")
+    public String test(){
+        String a = "test";
+        return a;
+    }
+
     //Pageable
     @GetMapping
     public ResponseEntity<List<PostDTO>> findAll(Pageable pageable){

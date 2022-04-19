@@ -2,35 +2,38 @@ package com.youngadessi.demo.post.api.post;
 
 import com.youngadessi.demo.post.model.post.PostDTO;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Objects;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
 
 
 @RequiredArgsConstructor
 @SpringBootTest
 public class PostServiceTest {
 
-    @Autowired
+    @MockBean
     PostService postService;
 
     @Test
     void save() {
-            PostDTO postDTO = new PostDTO();
-            postDTO.setContent("getir");
-            postDTO.setCreatedByName("efe");
-            postService.save(postDTO);
+        PostDTO postDTO = new PostDTO();
+        postDTO.setContent("aaaaa");
+        postDTO.setCreatedByName("bbbb");
 
-        PostDTO byId = postService.findById(11L);
-        if(Objects.equals(postDTO.getContent(), byId.getContent())){
-            assertThat(Boolean.TRUE).isTrue();
-        } else {
-            assertThat(Boolean.FALSE).isTrue();
-        }
+        when(postService.save(postDTO)).thenReturn(Boolean.TRUE);
+        assert(postService.save(postDTO)).equals(Boolean.TRUE);
+    }
+
+    @Test
+    void findById(){
+        PostDTO postDTO = new PostDTO();
+        postDTO.setContent("qqqqq");
+        postDTO.setCreatedByName("aaaa");
+
+        when(postService.findById(1L)).thenReturn(postDTO);
+        assert ("aaaa").equals(postService.findById(1l).getCreatedByName());
     }
 }
