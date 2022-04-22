@@ -59,20 +59,5 @@ public class PostServiceParameterizedTestExample {
 
        assert input.toString().equals(postContent): "Post not found with given id : " + input.intValue();
 
-
-
-//        try {
-//            assert input.toString().equals(postContent): "Post not found with given id : " + input.intValue();
-//
-//       } catch (AssertionError error){
-//           System.out.println(error);
-//       }
-
-//        assertAll("Should return post content",
-//                () -> assertEquals("post1", postContent),
-//                () -> assertEquals("post2", postContent),
-//                () -> assertEquals("post5", postContent)
-//        );
-
     }
 }
