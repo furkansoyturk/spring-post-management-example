@@ -19,6 +19,15 @@ public class PostController {
 
     private final PostService postService;
 
+    ///
+
+    @GetMapping(value = "/contents/{content}")
+    public List<Post> findAllByContent(@PathVariable("content") String content){
+        return postService.findAllByContent(content);
+    }
+
+    ///
+
     @GetMapping(value = "/test")
     public String test(){
         String a = "test";

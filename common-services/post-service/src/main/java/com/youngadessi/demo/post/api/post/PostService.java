@@ -36,6 +36,17 @@ public class PostService extends RuntimeException {
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
     private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
 
+    ///
+    public List<Post> findAllByContent(String content){
+        List<Post> allPostByContent = postRepository.findAllPostByContent(content);
+        return  allPostByContent;
+    }
+
+
+
+
+    ///
+
     public Boolean save(PostDTO postDTO) {
         postRepository.save(POST_MAPPER.postDTOToPost(postDTO));
         return Boolean.TRUE;
