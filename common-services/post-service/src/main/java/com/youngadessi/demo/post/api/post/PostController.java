@@ -1,11 +1,12 @@
 package com.youngadessi.demo.post.api.post;
 
-import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
+import com.youngadessi.demo.post.model.post.customDTOInterface;
+import com.youngadessi.demo.post.model.post.customDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,18 @@ public class PostController {
 
     private final PostService postService;
 
-    ///
+    ///  jpa return from customDTO & customInterfaceDTO
 
+    // from customDTO
     @GetMapping(value = "/contents/{content}")
-    public List<Post> findAllByContent(@PathVariable("content") String content){
-        return postService.findAllByContent(content);
+    public Page<customDTO> findAllByContentFromCustomDTO(@PathVariable("content") String content, Pageable pageable){
+        return postService.findAllByContentFromCustomDTO(content, pageable);
+    }
+
+    // from interface
+    @GetMapping(value = "/interface/{content}")
+    public Page<customDTOInterface> findAllByContentCustomDTOInterface(@PathVariable("content") String content, Pageable pageable){
+        return postService.findAllByContentFromCustomDTOInterface(content, pageable);
     }
 
     ///

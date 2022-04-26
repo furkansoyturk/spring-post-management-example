@@ -6,14 +6,11 @@ import com.youngadessi.demo.post.exception.NotFoundException;
 import com.youngadessi.demo.post.model.comment.Comment;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
 import com.youngadessi.demo.post.model.comment.CommentMapper;
-import com.youngadessi.demo.post.model.post.Post;
-import com.youngadessi.demo.post.model.post.PostDTO;
-import com.youngadessi.demo.post.model.post.PostMapper;
+import com.youngadessi.demo.post.model.post.*;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +34,16 @@ public class PostService extends RuntimeException {
     private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
 
     ///
-    public List<Post> findAllByContent(String content){
-        List<Post> allPostByContent = postRepository.findAllPostByContent(content);
+
+    public Page<customDTO> findAllByContentFromCustomDTO(String content, Pageable pageable){
+        Page<customDTO> allPostByContent = postRepository.findAllByContentFromCustomDTO(content, pageable);
         return  allPostByContent;
     }
 
-
+    public Page<customDTOInterface> findAllByContentFromCustomDTOInterface(String content, Pageable pageable){
+        Page<customDTOInterface> allPostByContent = postRepository.findAllByContentFromCustomDTOInterface(content, pageable);
+        return  allPostByContent;
+    }
 
 
     ///
