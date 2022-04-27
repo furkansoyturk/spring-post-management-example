@@ -19,8 +19,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
             nativeQuery = true)
     Page<Post> findLastFiveDays(Pageable pageable);
 
-//    @Query(value = "SELECT p FROM Post p WHERE p.content like %:content%")
-//    Page<Post> findAllPostByContent(@Param("content") String content, Pageable pageable);
     @Query(value = "SELECT new com.youngadessi.demo.post.model.post.customDTO (p.content, p.createdByName)  FROM Post p WHERE p.content like %:content%")
     Page<customDTO> findAllByContent(@Param("content") String content, Pageable pageable);
 
