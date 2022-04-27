@@ -24,14 +24,14 @@ public class PostController {
 
     // from customDTO
     @GetMapping(value = "/contents/{content}")
-    public Page<customDTO> findAllByContentFromCustomDTO(@PathVariable("content") String content, Pageable pageable){
-        return postService.findAllByContentFromCustomDTO(content, pageable);
+    public Page<customDTO> findAllByContent(@PathVariable("content") String content, Pageable pageable){
+        return postService.findAllByContent(content, pageable);
     }
 
     // from interface
-    @GetMapping(value = "/interface/{content}")
-    public Page<customDTOInterface> findAllByContentCustomDTOInterface(@PathVariable("content") String content, Pageable pageable){
-        return postService.findAllByContentFromCustomDTOInterface(content, pageable);
+    @GetMapping(value = "/interface/{created-by-name}")
+    public Page<customDTOInterface> findAllCreatedByName(@PathVariable("created-by-name") String createdByName, Pageable pageable){
+        return postService.findAllCreatedByName(createdByName, pageable);
     }
 
     ///

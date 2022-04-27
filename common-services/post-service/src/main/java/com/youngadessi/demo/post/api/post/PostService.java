@@ -35,13 +35,13 @@ public class PostService extends RuntimeException {
 
     ///
 
-    public Page<customDTO> findAllByContentFromCustomDTO(String content, Pageable pageable){
-        Page<customDTO> allPostByContent = postRepository.findAllByContentFromCustomDTO(content, pageable);
+    public Page<customDTO> findAllByContent(String content, Pageable pageable){
+        Page<customDTO> allPostByContent = postRepository.findAllByContent(content, pageable);
         return  allPostByContent;
     }
 
-    public Page<customDTOInterface> findAllByContentFromCustomDTOInterface(String content, Pageable pageable){
-        Page<customDTOInterface> allPostByContent = postRepository.findAllByContentFromCustomDTOInterface(content, pageable);
+    public Page<customDTOInterface> findAllCreatedByName(String createdByName, Pageable pageable){
+        Page<customDTOInterface> allPostByContent = postRepository.findAllCreatedByName(createdByName, pageable);
         return  allPostByContent;
     }
 
