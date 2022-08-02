@@ -6,14 +6,11 @@ import com.youngadessi.demo.post.exception.NotFoundException;
 import com.youngadessi.demo.post.model.comment.Comment;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
 import com.youngadessi.demo.post.model.comment.CommentMapper;
-import com.youngadessi.demo.post.model.post.Post;
-import com.youngadessi.demo.post.model.post.PostDTO;
-import com.youngadessi.demo.post.model.post.PostMapper;
+import com.youngadessi.demo.post.model.post.*;
 import com.youngadessi.demo.post.model.tag.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +32,21 @@ public class PostService extends RuntimeException {
 
     private static final PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
     private static final CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
+
+    ///
+
+    public Page<customDTO> findAllByContent(String content, Pageable pageable){
+        Page<customDTO> allPostByContent = postRepository.findAllByContent(content, pageable);
+        return  allPostByContent;
+    }
+
+    public Page<customDTOInterface> findAllCreatedByName(String createdByName, Pageable pageable){
+        Page<customDTOInterface> allPostByContent = postRepository.findAllCreatedByName(createdByName, pageable);
+        return  allPostByContent;
+    }
+
+
+    ///
 
     public Boolean save(PostDTO postDTO) {
         postRepository.save(POST_MAPPER.postDTOToPost(postDTO));
@@ -59,7 +71,7 @@ public class PostService extends RuntimeException {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with provided id " + id));
         PostDTO postDTO = POST_MAPPER.postToPostDTO(post);
 
-            return postDTO;
+        return postDTO;
     }
 
     public void deleteById(Long id) {

@@ -1,11 +1,10 @@
-package com.youngadessi.demo.post;
+package com.youngadessi.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootTest
-class PostServiceApplicationTests {
+class GatewayServiceApplicationTests {
 
     @Test
     void contextLoads() {

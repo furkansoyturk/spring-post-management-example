@@ -1,11 +1,12 @@
 package com.youngadessi.demo.post.api.post;
 
-import com.youngadessi.demo.post.model.post.Post;
 import com.youngadessi.demo.post.model.post.PostDTO;
 import com.youngadessi.demo.post.model.comment.CommentDTO;
+import com.youngadessi.demo.post.model.post.customDTOInterface;
+import com.youngadessi.demo.post.model.post.customDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,29 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+
+    ///  jpa return from customDTO & customInterfaceDTO
+
+    // from customDTO
+    @GetMapping(value = "/contents/{content}")
+    public ResponseEntity<Page<customDTO>> findAllByContent(@PathVariable("content") String content, Pageable pageable){
+        return new ResponseEntity<>(postService.findAllByContent(content, pageable), HttpStatus.OK);
+
+    }
+
+    // from interface
+    @GetMapping(value = "/interface/{created-by-name}")
+    public ResponseEntity<Page<customDTOInterface>> findAllCreatedByName(@PathVariable("created-by-name") String createdByName, Pageable pageable){
+        return new ResponseEntity<>(postService.findAllCreatedByName(createdByName, pageable), HttpStatus.OK);
+    }
+
+    ///
+
+    @GetMapping(value = "/test")
+    public String test(){
+        String a = "test";
+        return a;
+    }
 
     //Pageable
     @GetMapping

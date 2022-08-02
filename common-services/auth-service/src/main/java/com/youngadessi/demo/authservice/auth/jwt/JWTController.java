@@ -3,6 +3,7 @@ package com.youngadessi.demo.authservice.auth.jwt;
 import com.youngadessi.demo.authservice.auth.model.JWTRequestDTO;
 import com.youngadessi.demo.authservice.auth.model.JWTResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,5 +43,11 @@ public class JWTController {
         final String jwtToken = JWTManager.generateJwtToken(userDetails);
         return ResponseEntity.ok(new JWTResponseDTO(jwtToken));
     }
+
+    @PostMapping("/validate")
+    public ResponseEntity<Boolean> validateToken(){
+         return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+    }
+
 
 }

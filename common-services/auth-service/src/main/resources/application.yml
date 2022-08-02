@@ -4,5 +4,7 @@ server:
     context-path: /auth-service
 
 spring:
+  application:
+    name: auth
   profiles:
     include: sql #,script

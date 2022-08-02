@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-public class PostDTO {
+@AllArgsConstructor
+public class customDTO {
 
     private String createdByName;
 
